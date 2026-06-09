@@ -29,4 +29,5 @@ jobs:
       with:
          context: .
          file: ./vote/Dockerfile
+         push: true
          tags: voting-app:latest  
