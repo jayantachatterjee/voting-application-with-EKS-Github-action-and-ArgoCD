@@ -25,5 +25,8 @@ jobs:
         python -m unittest discover -s tests  
 
     - name: Build Docker image
-      run: |
-        docker build /vote --file /vote/Dockerfile -t voting-app:latest /vote
+      uses: docker/build-push-action@v2
+      with:
+         context: .
+         file: ./vote/Dockerfile
+         tags: voting-app:latest  
