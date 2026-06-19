@@ -36,11 +36,11 @@ jobs:
         with:
           context: vote
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/voting-app:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/voting-app:${{ github.run_id }}
 
       - name: Update tag on k8s deployment yaml file
         run: |
-          sed -i '/voting-container/{n;s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-app:${{ github.sha }}|;}' deployment.yml
+          sed -i '/voting-container/{n;s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-app:${{ github.run_id }}|;}' deployment.yml
 
       - name: Commit and Push
         run: |
