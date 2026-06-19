@@ -2,12 +2,11 @@
 name: voting-app CI
 on:
   push:
-    branches: ["main", "master"]
+    branches: ["master", "main"]
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
