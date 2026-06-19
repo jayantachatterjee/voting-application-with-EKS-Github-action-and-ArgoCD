@@ -30,14 +30,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      #      - name: Docker Build
-      #        uses: docker/build-push-action@v4
-      #        with:
-      #          context: vote
-      #          file: vote/Dockerfile
-      #          push: true
-      #          tags: ${{ secrets.DOCKERHUB_USERNAME }}/voting-app:${{ github.run_id }}
-
       - name: Docker Build
         working-directory: vote
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/voting-app:${{ github.run_id }}
