@@ -17,8 +17,7 @@ spec:
     spec:
       containers:
       - name: voting-container
-        image: voting-image:latest
-        imagePullPolicy: Never
+        image: jayanta/voting-application:voting-image
         ports:
         - containerPort: 80
 
@@ -41,8 +40,7 @@ spec:
     spec:
       containers:
       - name: results-container
-        image: result-image:latest
-        imagePullPolicy: Never
+        image: jayanta/voting-application:result-image
         ports:
         - containerPort: 80
 
@@ -65,9 +63,7 @@ spec:
     spec:
       containers:
       - name: worker-container
-        image: worker:latest
-        imagePullPolicy: Never
-
+        image: jayanta/voting-application:worker-image
 ---
 
 apiVersion: apps/v1
