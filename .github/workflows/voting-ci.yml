@@ -2,10 +2,12 @@
 name: voting-app CI
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "master"]
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,12 +40,12 @@ jobs:
 
       - name: Update tag on k8s deployment yaml file
         run: |
-          sed -i 's|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-app:${{ github.sha }}|g' k8s/deployment.yaml
+          sed -i '/voting-container/{n;s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-app:${{ github.sha }}|;}' deployment.yml
 
       - name: Commit and Push
         run: |
-          git config --global user.name '${{ secrets.DOCKERHUB_USERNAME }}
-          git config --global user.email '${{ secrets.DOCKERHUB_EMAIL }}
-          git add deployment.yaml
+          git config --global user.name "${{ secrets.DOCKERHUB_USERNAME }}"
+          git config --global user.email "rajijoy@rediffmail.com"
+          git add deployment.yml
           git commit -m "Update tag on k8s deployment yaml file"
           git push
