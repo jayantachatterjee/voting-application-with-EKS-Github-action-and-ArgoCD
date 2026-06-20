@@ -1,9 +1,5 @@
 # This file is for github workflow for CI/CD implementation with Github Action
 name: voting-app CI
-on:
-  push:
-    branches: ["master", "main"]
-
 permissions:
   contents: write
 
