@@ -46,17 +46,4 @@ jobs:
                   context: ./vote
                   push: true
                   tags: |
-                      ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}
-                      ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}
-
-            - name: Update Deployment File
-              run: |
-                  sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}|g" deployment.yml
-
-            - name: Commit Changes
-              run: |
-                  git config user.name "github-actions"
-                  git config user.email "github-actions@github.com"
-                  git add deployment.yml
-                  git commit -m "Update image tag [skip ci]" || exit 0
-                  git push
+                      ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:latest
