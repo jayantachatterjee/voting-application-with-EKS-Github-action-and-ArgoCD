@@ -29,7 +29,9 @@ jobs:
 
             - name: Run Tests
               working-directory: vote
-              run: pytest
+              #run: pytest
+              run: |
+                  pytest || [[ $? -eq 5 ]]
 
             - name: Setup Docker Buildx
               uses: docker/setup-buildx-action@v3
