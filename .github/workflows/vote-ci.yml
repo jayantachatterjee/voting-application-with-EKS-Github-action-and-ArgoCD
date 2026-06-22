@@ -52,7 +52,7 @@ jobs:
 
       - name: update deployment file
         run: |
-          sed -i 's|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}|' k8s/deployment.yaml
+          sed -i 's|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}|' deployment.yaml
 
       - name: commit changes
         run: |
