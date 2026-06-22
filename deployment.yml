@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: voting-container
-        image: jayanta/voting-application:voting-image
+        image: jayanta/voting-application:27942153477
         ports:
         - containerPort: 80
 
@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
       - name: results-container
-        image: jayanta/voting-application:result-image
+        image: jayanta/voting-application:27942153477
         ports:
         - containerPort: 80
 
@@ -63,7 +63,7 @@ spec:
     spec:
       containers:
       - name: worker-container
-        image: jayanta/voting-application:worker-image
+        image: jayanta/voting-application:27942153477
 ---
 
 apiVersion: apps/v1
@@ -83,7 +83,7 @@ spec:
     spec:
       containers:
       - name: redis-container
-        image: redis:alpine
+        image: jayanta/voting-application:27942153477
         imagePullPolicy: IfNotPresent
 
 ---
@@ -105,7 +105,7 @@ spec:
     spec:
       containers:
       - name: db-container
-        image: postgres:alpine
+        image: jayanta/voting-application:27942153477
         imagePullPolicy: IfNotPresent 
         env:
         - name: POSTGRES_USER
