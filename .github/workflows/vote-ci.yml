@@ -1,51 +1,63 @@
 name: voting-app-ci
 
 on:
-    push:
-        branches:
-            - main
-            - master
+  push:
+    branches:
+      - main
+      - master
 
 permissions:
-    contents: write
+  contents: write
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Setup Python
-              uses: actions/setup-python@v5
-              with:
-                  python-version: "3.11"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-            - name: Install Dependencies
-              working-directory: vote
-              run: |
-                  pip install -r requirements.txt
+      - name: Install Dependencies
+        working-directory: vote
+        run: |
+          pip install -r requirements.txt
 
-            - name: Run Tests
-              working-directory: vote
-              #run: pytest
-              run: |
-                  pytest || [[ $? -eq 5 ]]
+      - name: Run Tests
+        working-directory: vote
+        #run: pytest
+        run: |
+          pytest || [[ $? -eq 5 ]]
 
-            - name: Setup Docker Buildx
-              uses: docker/setup-buildx-action@v3
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-            - name: Docker Login
-              uses: docker/login-action@v3
-              with:
-                  username: ${{ secrets.DOCKERHUB_USERNAME }}
-                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-            - name: Build and Push Docker Image
-              uses: docker/build-push-action@v5
-              with:
-                  context: ./vote
-                  push: true
-                  tags: |
-                      ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:latest
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./vote
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}
+
+      - name: update deployment file
+        run: |
+          sed -i 's|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}|' k8s/deployment.yaml
+
+      - name: commit changes
+        run: |
+          git config user.name "jayantachatterjee"
+          git config user.email "rajibjoy@rediffmail.com"
+          git add deployment.yml
+          git commit -m "Update image tag [skip ci]" || exit 0
+          git push
