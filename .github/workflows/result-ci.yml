@@ -1,0 +1,69 @@
+name: result-app-ci
+
+on:
+    push:
+        branches:
+            - main
+            - master
+
+permissions:
+    contents: write
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup NodeJS
+              uses: actions/setup-node@v6
+              with:
+                  node-version: "20"
+
+            - name: Install Dependencies
+              working-directory: result
+              run: |
+                  npm ci
+
+            - name: Run lint
+              working-directory: result
+              run: |
+                  npm run lint
+
+            - name: Run Tests
+              working-directory: result
+              run: |
+                  npm run test
+
+            - name: Setup Docker Buildx
+              uses: docker/setup-buildx-action@v3
+
+            - name: Docker Login
+              uses: docker/login-action@v3
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: Build and Push Docker Image
+              uses: docker/build-push-action@v5
+              with:
+                  context: ./result
+                  push: true
+                  tags: |
+                      ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}
+
+            - name: update deployment file
+              run: |
+                  # sed -i 's|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}|' deployment.yml   
+                  # sed -i '/name: voting-container/{n;s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}|' deployment.yml
+                  sed -i '/name: result-container/{n;s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}|;}' deployment.yml
+
+            - name: commit changes
+              run: |
+                  git config user.name "jayantachatterjee"
+                  git config user.email "rajibjoy@rediffmail.com"
+                  git add deployment.yml
+                  git commit -m "Update image tag [skip ci]" || exit 0
+                  git push
