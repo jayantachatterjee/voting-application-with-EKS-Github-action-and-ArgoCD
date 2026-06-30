@@ -1,3 +1,4 @@
+
 name: voting-app-ci
 
 on:
@@ -48,7 +49,7 @@ jobs:
           context: ./vote
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:votingapp ${{ github.run_id }}
 
       - name: update deployment file
         run: |
