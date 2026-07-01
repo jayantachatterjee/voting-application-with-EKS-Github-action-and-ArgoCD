@@ -7,6 +7,8 @@ on:
       - main
       - master
 
+# This is going to prevent multiple workflow runs for the same branch. Same file will not be updated by multiple workflow runs at the same time. This is important because we are updating the deployment file in this workflow and if multiple workflow runs are trying to update the same file at the same time, it will create a conflict and the workflow will fail. So we are using concurrency to prevent that.
+
 concurrency:
   group: deployment-manifest-update
   cancel-in-progress: false
@@ -61,9 +63,12 @@ jobs:
 
       - name: commit changes
         run: |
-          git config user.name "jayantachatterjee"
-          git config user.email "rajibjoy@rediffmail.com"
+          git config user.name "${{ secrets.GIT_USERNAME }}"
+          git config user.email "${{ secrets.GIT_EMAIL }}"
           git add deployment.yml
           git commit -m "Update image tag [skip ci]" || exit 0
+          
+          # This will prevent an error of modifying same deployment file. GitHub rejects it because the remote branch now contains a newer commit.
+        
           git pull --rebase origin master
           git push origin master
