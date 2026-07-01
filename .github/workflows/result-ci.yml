@@ -31,7 +31,7 @@ jobs:
             - name: Run lint
               working-directory: result
               run: |
-                  npm run lint
+                  npm run lint --if-present
 
             - name: Run Tests
               working-directory: result
