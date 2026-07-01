@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: voting-container
-        image: jayanta/voting-application:28497379259
+        image: jayanta/voting-application:28497476908
         ports:
         - containerPort: 80
 
