@@ -53,13 +53,13 @@ jobs:
                   context: ./result
                   push: true
                   tags: |
-                      ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:resultapp ${{ github.run_id }}
+                      ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:resultapp-${{ github.run_id }}
 
             - name: update deployment file
               run: |
                   # sed -i 's|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}|' deployment.yml   
                   # sed -i '/name: voting-container/{n;s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:${{ github.run_id }}|' deployment.yml
-                  sed -i '/name: result-container/{n;s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:resultapp ${{ github.run_id }}|;}' deployment.yml
+                  sed -i '/name: result-container/{n;s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:resultapp-${{ github.run_id }}|;}' deployment.yml
 
             - name: commit changes
               run: |
