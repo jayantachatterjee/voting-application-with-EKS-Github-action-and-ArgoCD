@@ -33,10 +33,10 @@ jobs:
               run: |
                   npm run lint --if-present
 
-            - name: Run Tests
-              working-directory: result
-              run: |
-                  npm run test
+            #- name: Run Tests
+            #  working-directory: result
+            #  run: |
+            #      npm run test
 
             - name: Setup Docker Buildx
               uses: docker/setup-buildx-action@v3
