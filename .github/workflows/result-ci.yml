@@ -57,7 +57,7 @@ jobs:
 
             - name: update deployment file
               run: |
-                  sed -i '/name: result-container/{n;s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:resultapp-${{ github.run_id }}|;}' deployment.yml
+                  sed -i '/name: results-container/{n;s|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/voting-application:resultapp-${{ github.run_id }}|;}' deployment.yml
 
             - name: commit changes
               run: |
