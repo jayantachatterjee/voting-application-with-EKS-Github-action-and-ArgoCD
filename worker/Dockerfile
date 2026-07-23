@@ -1,4 +1,3 @@
-# build compiles the program for the builder's local platform
 FROM --platform=${BUILDPLATFORM} mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG TARGETPLATFORM
 ARG TARGETARCH
