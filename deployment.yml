@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
       - name: results-container
-        image: jayanta/voting-application:resultapp-28509479016
+        image: jayanta/voting-application:resultapp-30013608669
         ports:
         - containerPort: 80
 
