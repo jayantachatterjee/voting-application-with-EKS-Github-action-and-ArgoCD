@@ -5,8 +5,6 @@ on:
     branches:
       - master
       - main
-    paths:
-      - 'worker/**'
 
 permissions:
   contents: write
@@ -70,4 +68,3 @@ jobs:
           git commit -m "Update Worker image to ${{ github.run_id }} [skip ci]" || echo "No changes to commit"
 
           git push
-```
