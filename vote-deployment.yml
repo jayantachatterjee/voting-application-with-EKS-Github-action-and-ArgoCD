@@ -77,4 +77,3 @@ steps:
         git commit -m "Update vote image to ${IMAGE_TAG}"
 
       git push
-```
