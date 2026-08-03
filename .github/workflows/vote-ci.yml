@@ -5,8 +5,8 @@ on:
     branches:
       - master
       - main
-paths:
-  - 'vote/**'
+#paths:
+#  - 'vote/**'
 
 permissions:
   id-token: write
