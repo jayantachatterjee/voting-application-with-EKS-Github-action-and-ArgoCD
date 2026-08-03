@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: voting-container
-        image: voting-application:votingapp-${{ github.run_id }}
+        image: 224039896067.dkr.ecr.ap-south-1.amazonaws.com/voting-application:voting-30818802168
         imagePullPolicy: Always
 
         ports:
