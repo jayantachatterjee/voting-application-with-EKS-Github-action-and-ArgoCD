@@ -17,22 +17,22 @@
 #COPY --from=build /app .
 #ENTRYPOINT ["dotnet", "Worker.dll"]
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /source
 
-COPY *.csproj .
+COPY Worker.csproj .
 
-RUN dotnet restore
+RUN dotnet restore Worker.csproj
 
 COPY . .
 
-RUN dotnet publish \
-    -c Release \
-    -o /app \
-    --no-restore
+RUN dotnet publish Worker.csproj 
+-c Release 
+-o /app 
+--no-restore
 
-FROM mcr.microsoft.com/dotnet/runtime:7.0
+FROM mcr.microsoft.com/dotnet/runtime:8.0
 
 WORKDIR /app
 
