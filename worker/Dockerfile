@@ -27,8 +27,7 @@ RUN dotnet restore Worker.csproj
 
 COPY . .
 
-RUN dotnet publish Worker.csproj 
--c Release -o /app
+RUN dotnet publish Worker.csproj -c Release -o /app
 
 FROM mcr.microsoft.com/dotnet/runtime:8.0
 
