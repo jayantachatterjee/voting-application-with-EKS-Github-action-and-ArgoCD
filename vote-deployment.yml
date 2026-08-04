@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: voting-container
-        image: 224039896067.dkr.ecr.ap-south-1.amazonaws.com/voting-application:voting-30904822707
+        image: 224039896067.dkr.ecr.ap-south-1.amazonaws.com/voting-application:voting-30918807101
         imagePullPolicy: Always
 
         ports:
