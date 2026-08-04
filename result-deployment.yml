@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: results-container
-        image: jayanta/voting-application:resultapp-${{ github.run_id }}
+        image: 224039896067.dkr.ecr.ap-south-1.amazonaws.com/voting-application:result-30918553215
         imagePullPolicy: Always
 
         ports:
