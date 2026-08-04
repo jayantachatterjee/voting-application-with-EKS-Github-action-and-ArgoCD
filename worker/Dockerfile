@@ -29,8 +29,7 @@ COPY . .
 
 RUN dotnet publish Worker.csproj 
 -c Release 
--o /app 
---no-restore
+-o /app
 
 FROM mcr.microsoft.com/dotnet/runtime:8.0
 
