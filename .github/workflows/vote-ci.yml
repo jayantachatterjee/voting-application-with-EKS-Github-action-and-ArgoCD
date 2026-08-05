@@ -74,7 +74,13 @@ jobs:
 
           git add deploymentk8/vote-deployment.yml
 
-          git diff --cached --quiet || \
-            git commit -m "Update vote image to ${IMAGE_TAG}"
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
 
-          git push
+          git commit -m "Update worker image to ${IMAGE_TAG}"
+
+          git pull --rebase origin master
+
+          git push origin HEAD:master 
